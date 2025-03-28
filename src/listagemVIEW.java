@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -205,20 +206,23 @@ public class listagemVIEW extends javax.swing.JFrame {
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
             
+            List<ProdutosDTO> listagem = produtosdao.listarProdutos();
+            
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
             
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
             
-            for(int i = 0; i < listagem.size(); i++){
-                model.addRow(new Object[]{
-                    listagem.get(i).getId(),
-                    listagem.get(i).getNome(),
-                    listagem.get(i).getValor(),
-                    listagem.get(i).getStatus()
-                });
-            }
-        } catch (Exception e) {
+            for (ProdutosDTO f : listagem) { 
+                Object[] obj = new Object[] { 
+                    f.getId(),                          
+                    f.getNome(),                     
+                    f.getValor(),   
+                    f.getStatus()
+                                       
+                };
+                model.addRow(obj);
+        }
+        }    catch (Exception e) {
         }
     
     }
